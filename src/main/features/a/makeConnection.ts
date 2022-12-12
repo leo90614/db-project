@@ -1,5 +1,6 @@
 import { Client } from 'pg';
-import instance from '../../instance/dbClient';
+import { error, success } from 'main/lib/status';
+import instance from 'main/instance/dbClient';
 
 export default function makeConnection(ipcMain: Electron.IpcMain): void {
   const channelName = 'makeConnection';
@@ -7,9 +8,9 @@ export default function makeConnection(ipcMain: Electron.IpcMain): void {
     instance.client = new Client(arg[0]);
     try {
       await instance.client.connect();
-      return true;
+      return success('db연결 성공');
     } catch {
-      return false;
+      return error('db연결 실패');
     }
   });
 }

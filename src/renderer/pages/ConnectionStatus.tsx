@@ -46,8 +46,8 @@ const ConnectionStatus = () => {
   };
   const onClickConnection = async () => {
     const res = await db.command.request('makeConnection', [dbInfo]);
-    if (res === false) connectionFail();
-    if (res === true) connectionSuccess();
+    if (!res.status) connectionFail();
+    if (res.status) connectionSuccess();
   };
   const fields: ['user', 'host', 'database', 'password', 'port'] = [
     'user',
