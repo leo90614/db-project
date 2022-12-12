@@ -1,6 +1,6 @@
 import csv from 'csvtojson';
-import { error, success } from 'main/lib/status';
-import instance from 'main/instance/dbClient';
+import { error, success } from '../../lib/status';
+import instance from '../../instance/dbClient';
 
 const isCsvFormat = (fullPath: string) => {
   const pathArray = fullPath.split('.');

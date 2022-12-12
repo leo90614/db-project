@@ -1,6 +1,6 @@
 import { Client } from 'pg';
-import { error, success } from 'main/lib/status';
-import instance from 'main/instance/dbClient';
+import instance from '../../instance/dbClient';
+import { error, success } from '../../lib/status';
 
 export default function makeConnection(ipcMain: Electron.IpcMain): void {
   const channelName = 'makeConnection';
