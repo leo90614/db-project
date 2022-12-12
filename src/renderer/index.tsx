@@ -9,10 +9,3 @@ root.render(
     <App />
   </BrowserRouter>
 );
-
-// // calling IPC exposed from preload script
-// db.command.once('makeConnection', (arg) => {
-//   // eslint-disable-next-line no-console
-//   console.log(arg);
-// });
-db.command.sendMessage('makeConnection', ['ping']);
