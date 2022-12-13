@@ -1,10 +1,25 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'makeConnection' | 'csvToTable';
+export type Channels =
+  | 'ipc-example'
+  | 'makeConnection'
+  | 'csvToTable'
+  | 'readTables'
+  | 'scanTableFeature'
+  | 'mappingFK'
+  | 'mappingPK'
+  | 'deleteFeature'
+  | 'modifyFeatureDataType'
+  | 'mappingFK'
+  | 'findTableJoinCandidate'
+  | 'tableJoin'
+  | 'tableJoinMany'
+  | 'showResult'
+  | 'downloadResult';
 
 contextBridge.exposeInMainWorld('db', {
   command: {
-    request(channel: Channels, args: unknown[]): Promise<any> {
+    request(channel: Channels, args?: unknown[]): Promise<any> {
       return ipcRenderer.invoke(channel, args);
     },
     sendMessage(channel: Channels, args: unknown[]) {

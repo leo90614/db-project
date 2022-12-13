@@ -19,9 +19,9 @@ interface DBstatus {
 const defaultDBinfo =
   process.env.NODE_ENV === 'development'
     ? {
-        user: 'postgres',
+        user: 'root',
         host: 'localhost',
-        database: 'postgres',
+        database: 'test',
         password: '123',
         port: '5432',
       }

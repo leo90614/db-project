@@ -4,7 +4,7 @@ declare global {
   // eslint-disable-next-line vars-on-top, no-var
   var db: {
     command: {
-      request(channel: Channels, args: unknown[]): Promise<any>;
+      request(channel: Channels, args?: unknown[]): Promise<any>;
       sendMessage(channel: Channels, args: unknown[]): void;
       on(
         channel: Channels,

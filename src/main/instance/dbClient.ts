@@ -1,7 +1,7 @@
-import { Client } from 'pg';
+import mariadb from 'mariadb';
 
 class DBClient {
-  #client: Client = null;
+  #client: null | mariadb.Connection = null;
 
   async connect(config: {
     user: string;
@@ -10,8 +10,7 @@ class DBClient {
     password: string;
     port: number;
   }) {
-    this.#client = new Client(config);
-    await this.#client.connect();
+    this.#client = await mariadb.createConnection(config);
   }
 
   isDBconnected() {

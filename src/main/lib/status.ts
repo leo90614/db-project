@@ -5,8 +5,9 @@ export const error = (message: string) => {
   };
 };
 
-export const success = (message: string) => {
+export const success = (data?, message?: string) => {
   return {
+    data,
     status: true,
     message,
   };
