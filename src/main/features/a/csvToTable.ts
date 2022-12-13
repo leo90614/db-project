@@ -1,6 +1,6 @@
 import csv from 'csvtojson';
 import { error, success } from '../../lib/status';
-import instance from '../../instance/dbClient';
+import dbClient from '../../instance/dbClient';
 
 const isCsvFormat = (fullPath: string) => {
   const pathArray = fullPath.split('.');
@@ -28,7 +28,7 @@ export default function (ipcMain: Electron.IpcMain): void {
     if (!arg[0]) return error('파일 경로가 전달되지 않았습니다.');
     if (!isCsvFormat(arg[0]))
       return error('파일이 csv 형식이 아닌 것 같습니다.');
-    if (instance.client === null) return error('db연결이 되어있지 않습니다.');
+    if (!dbClient.isDBconnected()) return error('db연결이 되어있지 않습니다.');
 
     // CSV 파일을 각 row가 객체로 담긴 배열로 읽어옴
     const csvArrays = await csv().fromFile(arg[0]);
@@ -40,7 +40,7 @@ export default function (ipcMain: Electron.IpcMain): void {
     // 테이블 생성
     const createTableQuery = createTableCreateQuery(tableName, headers);
     try {
-      await instance.client.query(createTableQuery);
+      await dbClient.sql(createTableQuery);
     } catch {
       return error('테이블 생성 중 오류가 생겼습니다.');
     }
@@ -56,7 +56,7 @@ export default function (ipcMain: Electron.IpcMain): void {
         )} ) VALUES ( ${values.join(', ')} )`;
         quries.push(query);
       }
-      await Promise.all(quries.map((query) => instance.client!.query(query)));
+      await Promise.all(quries.map((query) => dbClient.sql(query)));
     } catch {
       return error('데이터 insert 중에 오류가 발생했습니다.');
     }
