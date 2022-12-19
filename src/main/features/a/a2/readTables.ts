@@ -47,26 +47,33 @@ export default function (ipcMain: Electron.IpcMain): void {
   ipcMain.handle(channelName, async (event, arg) => {
     const databaseName = arg[0];
     try {
-      const sqlStr = `SELECT table_name, table_rows FROM information_schema.tables WHERE table_schema = ${databaseName};`;
-      const res = await dbClient.sql(sqlStr);
+      // Get table names, number of records in the table, name of attributes of each table
+      // Get column names and number of records by separate sql query and merge them
+      const columnSql = `SELECT table_name, column_name FROM information_schema.columns WHERE table_schema = '${databaseName}';`;
+      const columnRes = await dbClient.sql(columnSql);
+      const rowsSql = `SELECT table_name, table_rows FROM information_schema.tables WHERE table_schema = '${databaseName}'`;
+      const rowsRes = await dbClient.sql(rowsSql);
+
+
       const resList = [];
-      if (res.length !== 0) {
-        resList.push({ table_name: res[0].table_name, table_rows: res[0].table_rows, column_name: [res[0].column_name] });
+      for (let i = 0; i < rowsRes.length; i += 1) {
+        resList.push({
+          table_name: rowsRes[i].table_name,
+          table_rows: rowsRes[i].table_rows,
+          column_name: [],
+        });
       }
-      for (let i = 1; i < res.length; i += 1) {
-        const prevRow = res[i - 1];
-        const row = res[i];
-        if (row.table_name === prevRow.table_name) {
-          resList[resList.length - 1].column_name.push(row.column_name);
+
+      let index = 0;
+      for (let i = 0; i < columnRes.length; i += 1) {
+        if (resList[index].table_name === columnRes[i].table_name) {
+          resList[index].column_name.push(columnRes[i].column_name);
         } else {
-          resList.push({
-            table_name: row.table_name,
-            table_rows: row.table_rows,
-            column_name: [row.column_name],
-          });
+          index += 1;
+          resList[index].column_name.push(columnRes[i].column_name);
         }
       }
-      return success(res, 'read succeeded');
+      return success(resList, 'read succeeded');
     } catch {
       return error('read failed');
     }
