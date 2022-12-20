@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import {
   List,
   ListItem,
@@ -7,29 +8,11 @@ import {
   Input,
   Button,
 } from 'renderer/CSScontainers';
-
-interface DBstatus {
-  user: string;
-  host: string;
-  database: string;
-  password: string;
-  port: string;
-}
-
-const defaultDBinfo =
-  process.env.NODE_ENV === 'development'
-    ? {
-        user: 'root',
-        host: 'localhost',
-        database: 'test',
-        password: '123',
-        port: '5432',
-      }
-    : { user: '', host: '', database: '', password: '', port: '' };
+import DBstate from 'renderer/states/DBstate';
 
 const ConnectionStatus = () => {
   const [connected, setConnected] = useState(false);
-  const [dbInfo, setInfo] = useState<DBstatus>(defaultDBinfo);
+  const [dbInfo, setInfo] = useRecoilState(DBstate);
   const [error, setError] = useState(false);
   const getInput = (e: any) => {
     setInfo({ ...dbInfo, [e.target.name]: e.target.value });
