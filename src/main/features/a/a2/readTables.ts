@@ -54,7 +54,6 @@ export default function (ipcMain: Electron.IpcMain): void {
       const rowsSql = `SELECT table_name, table_rows FROM information_schema.tables WHERE table_schema = '${databaseName}'`;
       const rowsRes = await dbClient.sql(rowsSql);
 
-
       const resList = [];
       for (let i = 0; i < rowsRes.length; i += 1) {
         resList.push({

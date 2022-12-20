@@ -9,7 +9,14 @@ export default function (ipcMain: Electron.IpcMain): void {
       const colName = arg[1];
       const colType = arg[2];
       const sqlStr = 'ALTER TABLE ';
-      const modSQL = sqlStr.concat(modTable, ' MODIFY ',colName, ' ', colType, ';');
+      const modSQL = sqlStr.concat(
+        modTable,
+        ' MODIFY ',
+        colName,
+        ' ',
+        colType,
+        ';'
+      );
       const res = await dbClient.sql(modSQL);
       return success();
     } catch {
