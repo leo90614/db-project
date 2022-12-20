@@ -10,13 +10,13 @@
 
 ### A-1. SourceDB 관리
 
-- [ ] DB연결을 한다. (make connection)
+- [x] DB연결을 한다. (make connection)
 
-- [ ] CSV 파일을 테이블로 업로드 한다. (csvToTable)
+- [x] CSV 파일을 테이블로 업로드 한다. (csvToTable)
 
 ### A-2. 테이블 속성 도메인 스캔
 
-- [ ] DB에 저장된 테이블 목록을 표시한다. (readTables)
+- [x] DB에 저장된 테이블 목록을 표시한다. (readTables)
 
 - [ ] 특정 테이블의 속성을 스캔하여 결과값을 파일로 저장 및 반환한다. (scanTableFeature)
 
