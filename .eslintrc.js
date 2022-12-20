@@ -1,6 +1,7 @@
 module.exports = {
   extends: 'erb',
   rules: {
+    'no-alert': 'off',
     'func-names': 'off',
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
