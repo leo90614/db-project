@@ -1,6 +1,6 @@
 import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import SourceDB from './pages/SourceDB';
+import CSVUpload from './pages/UploadCSV';
 import TableDomainScan from './pages/TableDomainScan';
 import TableFeatureEdit from './pages/TableFeatureEdit';
 import SingleTableJoin from './pages/SingleTableJoin';
@@ -8,7 +8,14 @@ import MultiTableJoin from './pages/MultiTableJoin';
 import Result from './pages/Result';
 import ConnectionStatus from './pages/ConnectionStatus';
 import './App.css';
-import { Wrapper, SideBar, List, ListItem, Main } from './CSScontainers';
+import {
+  Wrapper,
+  SideBar,
+  List,
+  ListItem,
+  Main,
+  Center,
+} from './CSScontainers';
 import isLoginState from './states/isLogin';
 import Login from './pages/Login';
 
@@ -16,14 +23,10 @@ export default function App() {
   const isLogin = useRecoilValue(isLoginState);
   if (!isLogin) {
     return (
-      <Wrapper
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Login />
+      <Wrapper>
+        <Center>
+          <Login />
+        </Center>
       </Wrapper>
     );
   }
@@ -35,7 +38,7 @@ export default function App() {
             <ConnectionStatus />
           </ListItem>
           <ListItem>
-            <Link to="/sourceDB">소스DB관리</Link>
+            <Link to="/uploadCsv">CSV업로드</Link>
           </ListItem>
           <ListItem>
             <Link to="/tableDomainScan">테이블 도메인 스캔</Link>
@@ -56,7 +59,7 @@ export default function App() {
       </SideBar>
       <Main>
         <Routes>
-          <Route path="/sourceDB" element={<SourceDB />} />
+          <Route path="/uploadCsv" element={<CSVUpload />} />
           <Route path="/tableDomainScan" element={<TableDomainScan />} />
           <Route path="/tableFeatureEdit" element={<TableFeatureEdit />} />
           <Route path="/singleTableJoin" element={<SingleTableJoin />} />

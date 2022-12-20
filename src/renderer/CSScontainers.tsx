@@ -29,10 +29,63 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const BorderBox = styled.div`
+  border: 2px solid black;
+  border-radius: 10px;
+`;
+
+export const Modal = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+`;
+
+export const ModalBody = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 80%;
+  height: 600px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+  transform: translateX(-50%) translateY(-50%);
+`;
+
+export const Item = styled.div`
+  margin: 5px;
+  padding: 5px;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const Input = styled.input``;
 
 export const Button = styled.button``;
 export const ErrorMessage = styled.div`
   opacity: 0;
   color: tomato;
+`;
+
+export const Center = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
