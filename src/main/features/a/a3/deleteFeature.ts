@@ -8,7 +8,7 @@ export default function (ipcMain: Electron.IpcMain): void {
       const deleteTable = arg[0];
       const col = arg[1];
       const sqlStr = 'ALTER TABLE ';
-      const deleteSQL = sqlStr.concat(deleteTable,' DROP COLUMN ', col, ';');
+      const deleteSQL = sqlStr.concat(deleteTable, ' DROP COLUMN ', col, ';');
       const res = await dbClient.sql(deleteSQL);
       return success(0, 'delete succeed');
     } catch {
