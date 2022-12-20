@@ -15,7 +15,8 @@ export type Channels =
   | 'tableJoin'
   | 'tableJoinMany'
   | 'showResult'
-  | 'downloadResult';
+  | 'downloadResult'
+  | 'isDBConnected';
 
 contextBridge.exposeInMainWorld('db', {
   command: {

@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-interface DBstatus {
+export interface DBstatus {
   user: string;
   host: string;
   database: string;
@@ -8,20 +8,24 @@ interface DBstatus {
   port: string;
 }
 
-const defaultDBinfo =
-  process.env.NODE_ENV === 'development'
-    ? {
-        user: 'root',
-        host: 'localhost',
-        database: 'test',
-        password: '123',
-        port: '5432',
-      }
-    : { user: '', host: '', database: '', password: '', port: '' };
+const localStorageEffect =
+  (key) =>
+  ({ setSelf, onSet }) => {
+    const savedValue = localStorage.getItem(key);
+    // console.log(savedValue);
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue) => {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
 
 const DBstate = atom<DBstatus>({
   key: 'DBstate',
-  default: defaultDBinfo,
+  default: { user: '', host: '', database: '', password: '', port: '' },
+  effects: [localStorageEffect('dbstatus')],
 });
 
 export default DBstate;

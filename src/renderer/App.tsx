@@ -1,4 +1,5 @@
 import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import SourceDB from './pages/SourceDB';
 import TableDomainScan from './pages/TableDomainScan';
 import TableFeatureEdit from './pages/TableFeatureEdit';
@@ -8,8 +9,24 @@ import Result from './pages/Result';
 import ConnectionStatus from './pages/ConnectionStatus';
 import './App.css';
 import { Wrapper, SideBar, List, ListItem, Main } from './CSScontainers';
+import isLoginState from './states/isLogin';
+import Login from './pages/Login';
 
 export default function App() {
+  const isLogin = useRecoilValue(isLoginState);
+  if (!isLogin) {
+    return (
+      <Wrapper
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Login />
+      </Wrapper>
+    );
+  }
   return (
     <Wrapper>
       <SideBar>
